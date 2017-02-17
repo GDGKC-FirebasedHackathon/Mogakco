@@ -26,14 +26,12 @@ import gdghackathon.mogakco.tools.mapsearch.Item;
 import gdghackathon.mogakco.tools.mapsearch.OnFinishSearchListener;
 import gdghackathon.mogakco.tools.mapsearch.Searcher;
 
-import static gdghackathon.mogakco.R.id.map;
-
 /**
  * Created by choijinjoo on 2017. 2. 16..
  */
 
 public class MapDialog extends MaterialDialog implements View.OnClickListener,MapView.POIItemEventListener {
-    @Bind(map)
+    @Bind(R.id.map)
     RelativeLayout mapContainer;
     @Bind(R.id.edtxSearch)
     EditText edtxSearch;
