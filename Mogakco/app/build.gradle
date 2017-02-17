@@ -9,6 +9,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,7 +29,7 @@ android {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
-    }a
+    }
 }
 
 dependencies {
@@ -37,6 +38,10 @@ dependencies {
     // daum map sdk
     compile files('libs/lib.jar')
     compile files('libs/libDaumMapAndroid.jar')
+
+    // MultiDex : https://developer.android.com/intl/ko/tools/building/multidex.html
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex-instrumentation:1.0.1'
 
     // android support library
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -62,11 +67,13 @@ dependencies {
     // Fresco
     // [BSD License] https://github.com/facebook/fresco/blob/master/LICENSE
     // http://stackoverflow.com/questions/36492807/error-in-build-after-adding-fresco
-    compile('com.facebook.fresco:fresco:0.14.1') {
-        exclude group: 'com.parse.bolts', module: 'bolts-applinks';
-        exclude module: 'bolts-android';
-        exclude group: 'com.parse.bolts', module: 'bolts-tasks';
-    }
+    compile('com.facebook.fresco:fresco:0.14.1')
+
+    // Android ViewPagerIndicator
+    // [Apache 2.0]
+    // original branch : https://github.com/JakeWharton/ViewPagerIndicator
+    // bug-fix version : https://github.com/msdx/ViewPagerIndicator
+    compile 'com.githang:viewpagerindicator:2.4.2@aar'
 
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-auth:10.0.1'

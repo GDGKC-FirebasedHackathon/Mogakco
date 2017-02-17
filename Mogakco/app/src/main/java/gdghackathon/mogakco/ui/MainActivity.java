@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import gdghackathon.mogakco.R;
-import tools.BottomNavigationViewHelper;
-import tools.RegisteredFragmentStatePagerAdapter;
+import gdghackathon.mogakco.tools.BottomNavigationViewHelper;
+import gdghackathon.mogakco.tools.RegisteredFragmentStatePagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.pager)
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initializeLayout();
     }
 
 
