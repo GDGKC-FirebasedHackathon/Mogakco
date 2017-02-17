@@ -43,8 +43,8 @@ public class EventAdapter extends CustomAdapter<MogakcoEvent, EventAdapter.Event
     @Override
     public void onBindViewHolder(EventViewHolder holder, final int position) {
         holder.txtvTitle.setText(mItems.get(position).getTitle());
-        if (mItems.get(position).getImageUrl() != null) {
-            holder.imgvEvent.setImageURI(mItems.get(position).getImageUrl());
+        if (mItems.get(position).getImage() != null) {
+            holder.imgvEvent.setImageURI(mItems.get(position).getImage());
         }
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override

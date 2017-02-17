@@ -80,8 +80,8 @@ public class EventDetailActivity extends AppCompatActivity implements View.OnCli
 
         btnMapDetail.setOnClickListener(this);
 
-        if (mEvent.getImageUrl() != null) {
-            imgvEvent.setImageURI(mEvent.getImageUrl());
+        if (mEvent.getImage() != null) {
+            imgvEvent.setImageURI(mEvent.getImage());
         }
 
     }

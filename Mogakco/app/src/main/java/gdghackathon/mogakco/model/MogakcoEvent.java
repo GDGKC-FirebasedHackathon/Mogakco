@@ -1,14 +1,17 @@
 package gdghackathon.mogakco.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 
 /**
  * Created by choijinjoo on 2017. 2. 16..
  */
-// model for mock data
+
+@IgnoreExtraProperties
 public class MogakcoEvent implements Serializable{
     String title;
-    String imageUrl;
+    String image;
     String description;
     String address;
     float latitude;
@@ -19,14 +22,14 @@ public class MogakcoEvent implements Serializable{
         this.title = title;
     }
 
-    public MogakcoEvent(String title, String imageUrl) {
+    public MogakcoEvent(String title, String image) {
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.image = image;
     }
 
-    public MogakcoEvent(String title, String imageUrl, float latitude, float longitude) {
+    public MogakcoEvent(String title, String image, float latitude, float longitude) {
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.image = image;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -39,12 +42,12 @@ public class MogakcoEvent implements Serializable{
         this.title = title;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Float getLatitude() {
