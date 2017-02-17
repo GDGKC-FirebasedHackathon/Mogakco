@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -37,6 +38,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     CirclePageIndicator indicator;
     @Bind(R.id.recvEvent)
     RecyclerView recvEvent;
+    @Bind(R.id.btnMogakco)
+    LinearLayout btnMogakco;
 
     bannerImageAdapter topBannerAdapter;
     EventAdapter mAdapter;
@@ -73,6 +76,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         recvEvent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recvEvent.setAdapter(mAdapter);
 
+        btnMogakco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapDialog.init(getActivity()).show();
+            }
+        });
         mAdapter.add(mogakcoEvents);
 
 
@@ -86,6 +95,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         topBannerAdapter.notifyDataSetChanged();
 
         mPager.setAdapter(topBannerAdapter);
+        mPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapDialog.init(getActivity()).show();
+            }
+        });
 
         final Resources resources = this.getResources();
         final float density = resources.getDisplayMetrics().density;

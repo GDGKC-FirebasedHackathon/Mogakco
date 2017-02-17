@@ -23,7 +23,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import gdghackathon.mogakco.R;
 import gdghackathon.mogakco.model.MogakcoEvent;
-import gdghackathon.mogakco.tools.MaterialDialog;
 
 /**
  * Created by choijinjoo on 2017. 2. 16..
@@ -32,10 +31,6 @@ import gdghackathon.mogakco.tools.MaterialDialog;
 public class CalendarFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.compactcalendar_view)
     gdghackathon.mogakco.tools.CompactCalendarView compactCalendarView;
-    //    @Bind(R.id.btnLeftMonth)
-//    ImageView btnLeftMonth;
-//    @Bind(R.id.btnRightMonth)
-//    ImageView btnRightMonth;
     @Bind(R.id.txtvYear)
     TextView txtvYear;
     @Bind(R.id.txtvMonth)
@@ -60,8 +55,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
 
         // Add yesterday (mock data)
-        Event ev1 = new Event(Color.BLUE, new DateTime().minusDays(1).getMillis(), new MogakcoEvent("GDG 세미나"));
-        Event ev2 = new Event(Color.RED, new DateTime().minusDays(1).getMillis(), new MogakcoEvent("홍대에서 같이 코딩합시다!"));
+        Event ev1 = new Event(Color.BLUE, new DateTime().minusDays(1).getMillis(), new MogakcoEvent("GDG 세미나", "http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png"));
+        Event ev2 = new Event(Color.RED, new DateTime().minusDays(1).getMillis(), new MogakcoEvent("홍대에서 같이 코딩합시다!", "http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png"));
         compactCalendarView.addEvent(ev1);
         compactCalendarView.addEvent(ev2);
 
@@ -80,54 +75,33 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
-                String titles = "";
-                for (Event event : events) {
-                    titles += ((MogakcoEvent) event.getData()).getTitle() + " ";
-                }
 
                 if (events.size() > 0)
-                    showEventListDialog(titles);
+                    showEventListDialog(events);
 
-                txtvYear.setText(dateFormatForYear.format(dateClicked)+"년");
+                txtvYear.setText(dateFormatForYear.format(dateClicked) + "년");
                 txtvMonth.setText(dateFormatForMonth.format(dateClicked) + "월");
 
             }
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-                txtvYear.setText(dateFormatForYear.format(firstDayOfNewMonth)+"년");
+                txtvYear.setText(dateFormatForYear.format(firstDayOfNewMonth) + "년");
                 txtvMonth.setText(dateFormatForMonth.format(firstDayOfNewMonth) + "월");
 
             }
         });
 
-//        btnLeftMonth.setOnClickListener(this);
-//        btnRightMonth.setOnClickListener(this);
     }
 
-    private void showEventListDialog(String titles) {
-        final MaterialDialog dialog = new MaterialDialog(getActivity());
+    private void showEventListDialog(List<Event> events) {
+        EventListDialog.init(getActivity(),events).show();
 
-        dialog.setTitle("이벤트 리스트");
-        dialog.setMessage(titles);
-        dialog.setPositiveButton("닫기", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case btnLeftMonth:
-//                compactCalendarView.showPreviousMonth();
-//                break;
-//            case btnRightMonth:
-//                compactCalendarView.showNextMonth();
-//                break;
         }
     }
 }

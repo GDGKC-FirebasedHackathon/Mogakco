@@ -37,7 +37,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/txtvTitle"
@@ -52,7 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/txtvDate"
@@ -63,11 +65,13 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp">
 
                     <TextView
                         android:id="@+id/txtvLocation"
@@ -76,7 +80,28 @@
                         android:layout_gravity="center"
                         android:text="장소"
                         android:textStyle="bold" />
-                </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnMapDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="크게 보기" />
+
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:src="@drawable/ic_arrow_right_large" />
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/mapContainer"
@@ -88,6 +113,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:paddingLeft="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1">
 

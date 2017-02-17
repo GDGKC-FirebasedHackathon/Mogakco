@@ -10,6 +10,7 @@ public class MogakcoEvent implements Serializable{
     String title;
     String imageUrl;
     String description;
+    String address;
     float latitude;
     float longitude;
 
@@ -68,5 +69,13 @@ public class MogakcoEvent implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

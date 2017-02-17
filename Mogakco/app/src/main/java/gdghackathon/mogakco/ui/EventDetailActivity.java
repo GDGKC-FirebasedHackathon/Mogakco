@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,7 +27,7 @@ import gdghackathon.mogakco.model.MogakcoEvent;
  * Created by choijinjoo on 2017. 2. 17..
  */
 
-public class EventDetailActivity extends AppCompatActivity {
+public class EventDetailActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.mapContainer)
     RelativeLayout mapContainer;
     @Bind(R.id.txtvTitle)
@@ -34,6 +36,8 @@ public class EventDetailActivity extends AppCompatActivity {
     TextView txtvDate;
     @Bind(R.id.txtvDescription)
     TextView txtvDescription;
+    @Bind(R.id.btnMapDetail)
+    LinearLayout btnMapDetail;
 
     @Bind(R.id.imgvEvent)
     SimpleDraweeView imgvEvent;
@@ -55,39 +59,73 @@ public class EventDetailActivity extends AppCompatActivity {
         initializeLayout();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mEvent.getLatitude() != null && mEvent.getLongitude() != null) {
+            drawMap();
+        }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapContainer.removeView(mapView);
+    }
+
     private void initializeLayout() {
         txtvTitle.setText(mEvent.getTitle());
         txtvDescription.setText(mEvent.getDescription());
+
+        btnMapDetail.setOnClickListener(this);
 
         if (mEvent.getImageUrl() != null) {
             imgvEvent.setImageURI(mEvent.getImageUrl());
         }
 
-        if (mEvent.getLatitude() != null && mEvent.getLongitude() != null) {
-            mapView = new MapView(this);
-            mapView.setDaumMapApiKey(AppController.getInstance().getLocalStore().getDaumMapAPIkey());
-            mapContainer.addView(mapView);
+    }
 
-            MapPOIItem poiItem = new MapPOIItem();
+    // variables for test
+    double lat;
+    double lon;
 
-            MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(mapView.getMapCenterPoint().getMapPointGeoCoord().latitude, mapView.getMapCenterPoint().getMapPointGeoCoord().longitude);
+    private void drawMap() {
+        mapView = new MapView(this);
+        mapView.setDaumMapApiKey(AppController.getInstance().getLocalStore().getDaumMapAPIkey());
+        mapContainer.addView(mapView);
+
+        MapPOIItem poiItem = new MapPOIItem();
+
+        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(mapView.getMapCenterPoint().getMapPointGeoCoord().latitude, mapView.getMapCenterPoint().getMapPointGeoCoord().longitude);
+        lat = mapView.getMapCenterPoint().getMapPointGeoCoord().latitude;
+        lon = mapView.getMapCenterPoint().getMapPointGeoCoord().longitude;
 
 //            MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(mEvent.getLatitude(), mEvent.getLongitude());
-            poiItem.setMapPoint(mapPoint);
+        poiItem.setMapPoint(mapPoint);
 
-            MapPointBounds mapPointBounds = new MapPointBounds();
-            mapPointBounds.add(mapPoint);
-            poiItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-            poiItem.setCustomImageResourceId(R.drawable.ic_marker);
-            poiItem.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
-            poiItem.setCustomImageAutoscale(false);
-            poiItem.setCustomSelectedImageResourceId(R.drawable.ic_marker_selected);
-            poiItem.setCustomImageAnchor(0.5f, 1.0f);
+        MapPointBounds mapPointBounds = new MapPointBounds();
+        mapPointBounds.add(mapPoint);
+        poiItem.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        poiItem.setCustomImageResourceId(R.drawable.ic_marker);
+        poiItem.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+        poiItem.setCustomImageAutoscale(false);
+        poiItem.setCustomSelectedImageResourceId(R.drawable.ic_marker_selected);
+        poiItem.setCustomImageAnchor(0.5f, 1.0f);
 
-            mapView.addPOIItem(poiItem);
-            mapView.fitMapViewAreaToShowAllPOIItems();
-
-        }
+        mapView.addPOIItem(poiItem);
+        mapView.fitMapViewAreaToShowAllPOIItems();
 
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnMapDetail:
+                startActivity(MapDetailActivity.getStartIntent(EventDetailActivity.this, mEvent));
+                break;
+        }
+    }
+
 }
