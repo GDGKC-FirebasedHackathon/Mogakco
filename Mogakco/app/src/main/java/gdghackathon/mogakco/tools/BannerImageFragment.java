@@ -2,7 +2,6 @@ package gdghackathon.mogakco.tools;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +35,6 @@ public class BannerImageFragment extends Fragment  {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_banner, container, false);
         ButterKnife.bind(this, v);
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         if (imageUrl != null) {
             imgvContent.setImageURI(imageUrl);

@@ -6,18 +6,23 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import gdghackathon.mogakco.R;
+import gdghackathon.mogakco.model.MogakcoEvent;
 import gdghackathon.mogakco.tools.bannerImageAdapter;
 
 /**
@@ -30,8 +35,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ViewPager mPager;
     @Bind(R.id.indicator)
     CirclePageIndicator indicator;
+    @Bind(R.id.recvEvent)
+    RecyclerView recvEvent;
 
     bannerImageAdapter topBannerAdapter;
+    EventAdapter mAdapter;
+
     Timer swipeTimer;
     Handler handler;
     Runnable update;
@@ -48,8 +57,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void initializeLayout() {
 
+        List<MogakcoEvent> mogakcoEvents = new ArrayList<>();
+        mogakcoEvents.add(new MogakcoEvent("모각코", "http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png"));
+        mogakcoEvents.add(new MogakcoEvent("모각코2", "http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png"));
+        mogakcoEvents.add(new MogakcoEvent("모각코3", "http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png"));
+        mogakcoEvents.add(new MogakcoEvent("모각코4", "http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png"));
+        mogakcoEvents.add(new MogakcoEvent("모각코5", "http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png"));
+
+        mAdapter = new EventAdapter(getActivity(), null, new EventAdapter.OnClickListener() {
+            @Override
+            public void OnClick(MogakcoEvent event) {
+                startActivity(EventDetailActivity.getStartIntent(getActivity(), event));
+            }
+        });
+        recvEvent.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recvEvent.setAdapter(mAdapter);
+
+        mAdapter.add(mogakcoEvents);
+
+
         topBannerAdapter = new bannerImageAdapter(getFragmentManager());
-        mPager.setAdapter(topBannerAdapter);
 
         topBannerAdapter.addBannerImage("http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_1.png");
         topBannerAdapter.addBannerImage("http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_2.png");
@@ -57,6 +84,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         topBannerAdapter.addBannerImage("http://storage.googleapis.com/mathpresso-storage/uploads/banners/16_giftpageimage_4.png");
 
         topBannerAdapter.notifyDataSetChanged();
+
+        mPager.setAdapter(topBannerAdapter);
+
         final Resources resources = this.getResources();
         final float density = resources.getDisplayMetrics().density;
 
@@ -109,6 +139,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
     private void restartSwipeTimer() {
         if (swipeTimer != null) {
             swipeTimer.cancel();
